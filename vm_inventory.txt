@@ -1,0 +1,64 @@
+# VM Inventory for Spark Cluster
+# Master: UP-FSHMN-VM1
+# Workers: UP-FSHMN-VM2 to UP-FSHMN-VM10
+
+VM1 (MASTER):
+  - IP: 10.0.0.4
+  - SSH: 185.182.158.150:8022
+  - User: krenuser
+  - Pass: jh87qLXHzFGt6gkb9ukV
+  - HTTPS: 185.182.158.150:443 <-> 10.0.0.4:443
+
+VM2 (WORKER):
+  - IP: 10.0.0.5
+  - SSH: 185.182.158.150:8023
+  - User: krenuser
+  - Pass: ed6673p1GCasuoGn7OHS
+
+VM3 (WORKER):
+  - IP: 10.0.0.6
+  - SSH: 185.182.158.150:8024
+  - User: krenuser
+  - Pass: 93becjVKKOzJEqserofC
+
+VM4 (WORKER):
+  - IP: 10.0.0.7
+  - SSH: 185.182.158.150:8025
+  - User: krenuser
+  - Pass: 55t6o9wPd3U7Pqt4sJVV
+
+VM5 (WORKER):
+  - IP: 10.0.0.8
+  - SSH: 185.182.158.150:8026
+  - User: krenuser
+  - Pass: M3t01MISTXef3J6Uspck
+
+VM6 (WORKER):
+  - IP: 10.0.0.9
+  - SSH: 185.182.158.150:8027
+  - User: krenuser
+  - Pass: lEwxgSAZa7T8lY85Z7UM
+
+VM7 (WORKER):
+  - IP: 10.0.0.10
+  - SSH: 185.182.158.150:8028
+  - User: krenuser
+  - Pass: 3rcQePQnsV5bBZ9YULSd
+
+VM8 (WORKER):
+  - IP: 10.0.0.11
+  - SSH: 185.182.158.150:8029
+  - User: krenuser
+  - Pass: iCeKbi51jKmtL3XmEVhG
+
+VM9 (WORKER):
+  - IP: 10.0.0.12
+  - SSH: 185.182.158.150:8030
+  - User: krenuser
+  - Pass: hww1F8lLz21cFKHYBwYL
+
+VM10 (WORKER):
+  - IP: 10.0.0.13
+  - SSH: 185.182.158.150:8031
+  - User: krenuser
+  - Pass: j67k4k6QAl1l9TDmEgsN
