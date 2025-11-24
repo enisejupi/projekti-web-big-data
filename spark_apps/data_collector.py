@@ -253,16 +253,37 @@ class FinancialDataCollector:
             if all_data:
                 df_combined = pd.concat(all_data, ignore_index=True)
                 
-                # Konverto në Spark DataFrame
-                spark_df = self.spark.createDataFrame(df_combined)
-                
-                # Ruaj në Parquet për përpunim të shpejtë
-                output_path = f"/opt/financial-analysis/data/raw/batch_{start.strftime('%Y%m%d_%H%M%S')}.parquet"
-                spark_df.write.mode('overwrite').parquet(output_path)
-                
-                logger.info(f"✓ U ruajtën {len(df_combined)} rekorde në {output_path}")
-                logger.info(f"  Asetet e përpunuara: {df_combined['symbol'].nunique()}")
-                logger.info(f"  Koha e përpunimit: {(datetime.now() - start).total_seconds():.1f}s")
+                # Ruaj direkt në PostgreSQL
+                try:
+                    import psycopg2
+                    conn = psycopg2.connect(
+                        host="10.0.0.4",
+                        port=5432,
+                        database="financial_data",
+                        user="financeuser",
+                        password="secure_password_2024"
+                    )
+                    cur = conn.cursor()
+                    
+                    # Insert data into PostgreSQL
+                    for _, row in df_combined.iterrows():
+                        cur.execute("""
+                            INSERT INTO market_data 
+                            (symbol, timestamp, open, high, low, close, volume, daily_return, volatility, avg_volume, ma_5, ma_20)
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        """, (row['symbol'], row['timestamp'], row['open'], row['high'], row['low'], 
+                              row['close'], row['volume'], row['daily_return'], row['volatility'], 
+                              row['avg_volume'], row['ma_5'], row['ma_20']))
+                    
+                    conn.commit()
+                    cur.close()
+                    conn.close()
+                    
+                    logger.info(f"✓ U ruajtën {len(df_combined)} rekorde në PostgreSQL")
+                    logger.info(f"  Asetet e përpunuara: {df_combined['symbol'].nunique()}")
+                    logger.info(f"  Koha e përpunimit: {(datetime.now() - start).total_seconds():.1f}s")
+                except Exception as e:
+                    logger.error(f"Gabim në ruajtjen e të dhënave në PostgreSQL: {e}")
             else:
                 logger.warning("Nuk u mbledhën të dhëna në këtë iteracion")
             
